@@ -8,8 +8,7 @@ import org.springframework.stereotype.Component;
 public class UserPresenter {
 
     public UserDtoResponse presentUser(User user) {
-        String userName = user.getFirstName() + " " + user.getLastName();
 
-        return new UserDtoResponse(user.getId(), userName, user.getEmail(), user.getAvatar().toString());
+        return new UserDtoResponse(user.getId(), user.getName(), user.getEmail(), user.getAvatar().toString());
     }
 }
