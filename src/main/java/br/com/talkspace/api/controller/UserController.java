@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("signup")
+@RequestMapping("/signup")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -28,13 +28,12 @@ public class UserController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity signUp(@RequestBody @Valid UserRegisterDtoRequest userData, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity signUp(@RequestBody @Valid UserRegisterDtoRequest userData) {
         var user = new User(userData);
-        var uri = uriBuilder.path("sigup/{id}").buildAndExpand(user.getId()).toUri();
 
         try {
             service.registerUser(user);
-            return ResponseEntity.created(uri).body(new UserRegisterDtoDetail(user));
+            return ResponseEntity.ok().build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
