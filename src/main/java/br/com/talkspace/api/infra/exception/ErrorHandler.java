@@ -20,7 +20,7 @@ public class ErrorHandler {
         return ResponseEntity.notFound().build();
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity handleUnauthorizedError(HttpMessageNotReadableException exception) {
         return ResponseEntity.badRequest().body(exception.getMessage());
     }
