@@ -1,9 +1,11 @@
 package br.com.talkspace.api.infra.security;
 
+import br.com.talkspace.api.service.UserService;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import br.com.talkspace.api.database.model.User;
@@ -18,15 +20,15 @@ public class TokenService {
     @Value("${api.security.token.secret")
     private String secret;
 
+    @Autowired
+    private UserService userService;
+
+    public boolean isValidCredentials(String email, String password) {
+        return userService.isValidUser(email, password);
+    }
+
     public String generateToken(User user) {
-        /*chamar o banco e verificar se e-mail existe,
-        senão existir throw new exception
 
-        criptografar a senha e verificar se bate com a que está armazenada na
-        variável desse usuário
-
-        caso seja diferente lançar exceção
-         */
         try {
             var algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
@@ -52,7 +54,6 @@ public class TokenService {
         }
 
     }
-
 
     private Instant expirationDate() {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
