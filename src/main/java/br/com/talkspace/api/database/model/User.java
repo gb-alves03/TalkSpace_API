@@ -3,10 +3,8 @@ package br.com.talkspace.api.database.model;
 import br.com.talkspace.api.dto.user.UserRegisterDtoRequest;
 import br.com.talkspace.api.infra.security.SecurityConfigurations;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,21 +19,24 @@ import java.util.UUID;
 @Table(name = "users")
 @Entity(name = "User")
 @Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
     private String name;
     private String email;
     private String password;
     private String avatar;
-
-    public User() {
-        this.id = UUID.randomUUID();
-    }
 
     public User(UserRegisterDtoRequest userData) {
         this.name = userData.firstName() + " " + userData.lastName();
