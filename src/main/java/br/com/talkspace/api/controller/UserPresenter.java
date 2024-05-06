@@ -9,6 +9,6 @@ public class UserPresenter {
 
     public UserDtoResponse presentUser(User user) {
 
-        return new UserDtoResponse(user.getId(), user.getName(), user.getEmail(), user.getAvatar().toString());
+        return new UserDtoResponse(user.getId(), user.getName(), user.getEmail(), user.getPassword(), user.getAvatar().toString());
     }
 }
