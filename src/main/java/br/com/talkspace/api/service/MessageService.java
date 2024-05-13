@@ -24,11 +24,8 @@ public class MessageService {
         this.messages = new ArrayList<>();
     }
 
-    public List<Message> findBySenderAndTarget(String sender, String target) {
-        this.messages.stream().filter((message -> (message.getSender().toString().equals(sender) && message.getTarget().toString().equals(target)) ||
-                (message.getSender().toString().equals(target) && message.getTarget().toString().equals(sender)))).toList(); {
-                    return messageRepository.findBySenderAndTarget(sender, target);
-        }
+    public List<Message> findByAllMessages(Message message) {
+        return messageRepository.findByMessage(message);
     }
 
     public Message saveMessage(Message message) {

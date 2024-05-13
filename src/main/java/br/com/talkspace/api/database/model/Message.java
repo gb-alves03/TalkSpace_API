@@ -22,20 +22,14 @@ public class Message {
     private UUID id = UUID.randomUUID();
 
     @Column
-    private String sender;
-
-    @Column
-    private String target;
-
+    private String owner;
     @Column
     private String message;
-
     @Column
     private LocalDateTime createdAt;
 
     public Message(MessageDto messageData) {
-        this.sender = messageData.sender();
-        this.target = messageData.target();
+        this.owner = messageData.owner();
         this.message = messageData.message();
         this.createdAt = messageData.createdAt();
     }

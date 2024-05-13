@@ -9,6 +9,6 @@ public class MessagePresenter {
 
     public MessageDto presentMessage(Message message) {
 
-        return new MessageDto(message.getId(), message.getSender(), message.getTarget(), message.getMessage(), message.getCreatedAt());
+        return new MessageDto(message.getId(), message.getOwner(), message.getMessage(), message.getCreatedAt());
     }
 }

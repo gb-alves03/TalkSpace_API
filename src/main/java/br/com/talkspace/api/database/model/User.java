@@ -41,7 +41,7 @@ public class User implements UserDetails {
     public User(UserRegisterDtoRequest userData) {
         this.name = userData.firstName() + " " + userData.lastName();
         this.email = userData.email();
-        this.password = new SecurityConfigurations().passwordEncoder().encode(userData.password());
+        this.password = userData.password();
         this.avatar = userData.avatar();
     }
 

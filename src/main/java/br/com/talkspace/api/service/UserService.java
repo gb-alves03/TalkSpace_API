@@ -14,10 +14,12 @@ public class UserService {
     @Autowired
     private final UserRepository repository;
 
-    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository repository) {
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void registerUser(User user) {
@@ -26,21 +28,4 @@ public class UserService {
         }
         repository.save(user);
     }
-
-    public boolean isValidUser(String email, String password) {
-        try {
-            User user = (User) repository.findByEmail(email);
-
-            if (user == null) {
-                return false;
-            }
-
-            boolean passwordFound = passwordEncoder.matches(password, user.getPassword());
-
-            return passwordFound;
-        } catch (Exception e)  {
-            throw new RuntimeException();
-        }
-    }
-
 }
